@@ -147,8 +147,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def removePage(self):
         # Получение индекса текущей вкладки
         current_index = self.tabWidget.currentIndex()
-        os.remove(f'{SETTINGS.SVG_DIR}/card_{current_index}.svg')
-        os.remove(f'{SETTINGS.JSON_DIR}/card_{current_index}.json')
+        os.unlink(f'{SETTINGS.SVG_DIR}/card_{current_index}.svg')
+        os.unlink(f'{SETTINGS.JSON_DIR}/card_{current_index}.json')
 
         # Удаление текущей вкладки
         self.tabWidget.removeTab(current_index)
