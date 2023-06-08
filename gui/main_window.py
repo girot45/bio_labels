@@ -200,6 +200,81 @@ class Ui_MainWindow(object):
         QMetaObject.connectSlotsByName(MainWindow)
     # setupUi
 
+    def create_tab_view(self):
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding,
+                                 QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        self.tab = QWidget()
+        self.tab.setObjectName(u"tab")
+        self.layoutWidget = QWidget(self.tab)
+        self.layoutWidget.setObjectName(u"layoutWidget")
+        self.layoutWidget.setGeometry(QRect(0, 0, 371, 451))
+        self.verticalLayout_3 = QVBoxLayout(self.layoutWidget)
+        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
+        self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
+        self.Card_view = QGraphicsView(self.layoutWidget)
+        self.Card_view.setObjectName(u"Card_view")
+
+        self.verticalLayout_3.addWidget(self.Card_view)
+
+        self.Change_card_la = QVBoxLayout()
+        self.Change_card_la.setObjectName(u"Change_card_la")
+        self.verticalSpacer_12 = QSpacerItem(20, 40,
+                                             QSizePolicy.Minimum,
+                                             QSizePolicy.Expanding)
+
+        self.Change_card_la.addItem(self.verticalSpacer_12)
+
+        self.verticalSpacer_14 = QSpacerItem(20, 40,
+                                             QSizePolicy.Minimum,
+                                             QSizePolicy.Expanding)
+
+        self.Change_card_la.addItem(self.verticalSpacer_14)
+
+        self.Edit_card_but = QPushButton(self.layoutWidget)
+        self.Edit_card_but.setObjectName(u"Edit_card_but")
+        sizePolicy.setHeightForWidth(
+            self.Edit_card_but.sizePolicy().hasHeightForWidth())
+        self.Edit_card_but.setSizePolicy(sizePolicy)
+        font = QFont()
+        font.setPointSize(23)
+        self.Edit_card_but.setFont(font)
+
+        self.Change_card_la.addWidget(self.Edit_card_but)
+
+        self.verticalSpacer_15 = QSpacerItem(20, 40,
+                                             QSizePolicy.Minimum,
+                                             QSizePolicy.Expanding)
+
+        self.Change_card_la.addItem(self.verticalSpacer_15)
+
+        self.Show_card_but = QPushButton(self.layoutWidget)
+        self.Show_card_but.setObjectName(u"Show_card_but")
+        self.Show_card_but.setFont(font)
+
+        self.Change_card_la.addWidget(self.Show_card_but)
+
+        self.verticalSpacer_13 = QSpacerItem(20, 40,
+                                             QSizePolicy.Minimum,
+                                             QSizePolicy.Expanding)
+
+        self.Change_card_la.addItem(self.verticalSpacer_13)
+
+        self.verticalLayout_3.addLayout(self.Change_card_la)
+
+        self.tabWidget.addTab(self.tab, "")
+
+        self.Edit_card_but.setText(QCoreApplication.translate(
+            "MainWindow",
+            u"\u0418\u0437\u043c\u0435\u043d\u0438\u0442\u044c",
+            None))
+        self.Show_card_but.setText(QCoreApplication.translate(
+            "MainWindow",
+            u"\u041f\u043e\u0441\u043c\u043e\u0442\u0440\u0435\u0442\u044c \u043a\u0430\u0440\u0442\u043e\u0447\u043a\u0443",
+            None))
+        return self.tab
+
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
         self.Edit_card_but.setText(QCoreApplication.translate(

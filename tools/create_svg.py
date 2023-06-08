@@ -1,8 +1,11 @@
 import json
+
+from PySide6 import QtCore
 from PySide6.QtSvg import QSvgGenerator
 from PySide6.QtGui import QPainter, QColor, QPen, \
     QFontMetrics, QFont
-from PySide6.QtCore import QFile, QRectF, QSize
+from PySide6.QtCore import QFile, QRectF, QSize, Qt, QTextStream, \
+    QIODevice
 import SETTINGS
 
 
@@ -22,6 +25,15 @@ class Card:
             font,
             font_size,
             copies,
+            name_align_left,
+            name_align_center,
+            name_align_right,
+            date_align_left,
+            date_align_center,
+            date_align_right,
+            main_text_align_left,
+            main_text_align_center,
+            main_text_align_right,
             filename
     ):
         self.filename = filename
@@ -37,17 +49,30 @@ class Card:
         self.italic = italic
         self.font = font
         self.font_size = font_size
+        self.name_align_left = name_align_left,
+        self.name_align_center = name_align_center,
+        self.name_align_right = name_align_right,
+        self.date_align_left = date_align_left,
+        self.date_align_center = date_align_center,
+        self.date_align_right = date_align_right,
+        self.main_text_align_left = main_text_align_left,
+        self.main_text_align_center = main_text_align_center,
+        self.main_text_align_right = main_text_align_right,
         self.copies = copies
+
+    def test(self):
+        print(self.__dict__)
 
     def create_card_json(self):
         filename = SETTINGS.JSON_DIR + f'/{self.filename}'
-        with open(filename, 'w') as f:
+        with open(filename, 'w+') as f:
             f.write(json.dumps(self.__dict__))
+            print(f.read())
 
     def create_card_svg(self, index):
         # настройка размерности
         dpi = SETTINGS.DPI
-        width_in_pixels = int(int(self.width) * dpi / 254)
+        width_in_pixels = int((int(self.width)) * dpi / 254)
         height_in_pixels = int(int(self.height) * dpi / 254)
 
         # настройка шрифтов
@@ -63,15 +88,15 @@ class Card:
         font_name_text = make_font(
             font=self.font,
             font_size=self.font_size,
-            bold=self.bold,
-            italic=self.italic,
-            underline=self.underline,
+            bold=False,
+            italic=False,
+            underline=False,
         )
 
         name_font, name_width, name_height, name_font_metrics = \
             make_secondary_font(
                 font=font_name_text,
-                font_size=self.font_size,
+                font_size=int(self.font_size) - 1,
                 text=self.date
             )
 
@@ -103,13 +128,16 @@ class Card:
             dx = date_font_metrics.height()
 
         svg_generator.setSize(
-            QSize(width_in_pixels + dx*3, height_in_pixels)
+            QSize(
+                width_in_pixels + 5 + dx*2,
+                height_in_pixels + 3
+            )
         )
         svg_generator.setViewBox(
             QRectF(
                 0,  # смещение по x
                 0,  # смещение по x
-                width_in_pixels + dx*3,  # ширина
+                width_in_pixels + dx*2,  # ширина
                 height_in_pixels  # высота
             )
         )
@@ -126,11 +154,19 @@ class Card:
             # создание текста даты
             painter.rotate(-90)
             painter.setFont(date_font)
-            painter.setPen(QColor(128, 128, 128))
+            painter.setPen(QColor(0,0,0))
+            if self.date_align_center[0]:
+                dy = -(height_in_pixels - 1 - (height_in_pixels
+                                           - date_width) / 2)
+            elif self.date_align_right[0]:
+                dy = -(height_in_pixels - (height_in_pixels
+                                           - date_width))
+            else:
+                dy = -height_in_pixels + 1
             painter.drawText(
                 QRectF(
-                    -height_in_pixels + 1,
-                    0,
+                    dy,
+                    dx/2,
                     date_width,
                     date_height
                 ),
@@ -139,7 +175,7 @@ class Card:
             painter.rotate(90)
 
         # создание рамки основного текста
-        rect = QRectF(0, 0, width_in_pixels, height_in_pixels)
+        rect = QRectF(0, 0, width_in_pixels + dx*2, height_in_pixels)
         rect_pen = QPen(QColor(0, 0, 0))
         rect_pen.setWidth(1)
 
@@ -149,34 +185,83 @@ class Card:
         # Подготовка текста и перенос по словам
         font_main_text_metrics = QFontMetrics(font_main_text)
 
+        words = self.text.split()
+
         text = prepare_text(
-            words=self.text.split(),
+            words=words,
             font_metrics=font_main_text_metrics,
-            width=width_in_pixels - dx*2,
+            width=width_in_pixels,
         )
 
         # Отрисовка текста
-        rect_text = QRectF(dx*2 + 1, 1, width_in_pixels,
-                           height_in_pixels)
         painter.setFont(font_main_text)
         painter.setPen(QColor(0, 0, 0))
-        painter.drawText(rect_text, text)
+
+        if self.main_text_align_center[0]:
+            painter.drawText(
+                QRectF(
+                    dx * 2,
+                    0,
+                    width_in_pixels,
+                    height_in_pixels
+                ),
+                QtCore.Qt.AlignHCenter,
+                text
+            )
+        elif self.main_text_align_right[0] == 1:
+            painter.drawText(
+                QRectF(
+                    dx * 2 - 2,
+                    1,
+                    width_in_pixels,
+                    height_in_pixels
+                ),
+                QtCore.Qt.AlignRight,
+                text
+            )
+        else:
+            painter.drawText(
+                QRectF(
+                    dx*2 + 1,
+                    1,
+                    width_in_pixels,
+                    height_in_pixels
+                ),
+                QtCore.Qt.AlignLeft,
+                text
+            )
 
         # Добавление имени с более тонким шрифтом
         if self.name_check:
             painter.setFont(name_font)
-            painter.setPen(QColor(128, 128, 128))
-            painter.drawText(
-                QRectF(dx*2 + 1, height_in_pixels - name_height - 2,
-                       name_width, name_height), self.name)
+            painter.setPen(QColor(0,0,0))
+            name_y = height_in_pixels - name_height - 2
 
-        # rect_text.translate(shift, 0)
-        # rect.translate(shift, 0)
-
+            if self.name_align_center[0]:
+                print((width_in_pixels - name_width) / 2)
+                name_x = dx * 2 + (width_in_pixels -
+                                   name_width) / 2
+                painter.drawText(
+                    QRectF(name_x, name_y, name_width, name_height),
+                    QtCore.Qt.AlignHCenter,
+                    self.name
+                )
+            elif self.name_align_right[0]:
+                name_x = dx * 2 + width_in_pixels - name_width - 1
+                painter.drawText(
+                    QRectF(name_x, name_y, name_width, name_height),
+                    QtCore.Qt.AlignRight,
+                    self.name
+                )
+            else:
+                name_x = dx * 2 + 1
+                painter.drawText(
+                    QRectF(name_x, name_y, name_width, name_height),
+                    QtCore.Qt.AlignLeft,
+                    self.name
+                )
         painter.end()
 
-        svg_file = QFile(filename)
-        svg_file.close()
 
 
 def make_secondary_font(font_size, font, text):

@@ -41,7 +41,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def tabChanged(self, index_change):
         global tab_index
         tab_index = index_change
-        print(tab_index)
+        self.tabWidget.widget(tab_index)
         if tab_index >= 0:
             open(f'{SETTINGS.SVG_DIR}/card_{tab_index}.svg',
                  'w').close()
@@ -59,24 +59,58 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                                          SETTINGS.DATE_FORMAT)
                 dialog.ui.main_text_edit.setText(data['text'])
                 dialog.ui.height_spinbox.setValue(
-                    int(data['height']))
+                    int(data['height'])
+                )
                 dialog.ui.width_spinbox.setValue(
-                    int(data['width']))
+                    int(data['width'])
+                )
                 dialog.ui.name_text_edit.setText(data['name'])
                 dialog.ui.date_edit.setDate(date)
                 dialog.ui.date_checkbox.setChecked(
-                    data['date_check'])
+                    data['date_check']
+                )
                 dialog.ui.name_text_checkbox.setChecked(
-                    data['name_check'])
+                    data['name_check']
+                )
                 dialog.ui.underline.setChecked(data['underline'])
                 dialog.ui.bold.setChecked(data['bold'])
                 dialog.ui.cursiv.setChecked(data['italic'])
                 dialog.ui.fontComboBox.setCurrentFont(
-                    data['font'])
+                    data['font']
+                )
                 dialog.ui.font_size_spinbox.setValue(
-                    int(data['font_size']))
+                    int(data['font_size'])
+                )
                 dialog.ui.card_copies.setValue(
-                    int(data['copies']))
+                    int(data['copies'])
+                )
+                dialog.ui.Align_left_date.setChecked(
+                    data['date_align_left'][0]
+                )
+                dialog.ui.Align_right_date.setChecked(
+                    data['date_align_right'][0]
+                )
+                dialog.ui.Align_center_date.setChecked(
+                    data['date_align_center'][0]
+                )
+                dialog.ui.Align_left_name.setChecked(
+                    data['name_align_left'][0]
+                )
+                dialog.ui.Align_right_name.setChecked(
+                    data['name_align_right'][0]
+                )
+                dialog.ui.Align_center_name.setChecked(
+                    data['name_align_center'][0]
+                )
+                dialog.ui.Align_left_main_text.setChecked(
+                    data['main_text_align_left'][0]
+                )
+                dialog.ui.Align_right_main_text.setChecked(
+                    data['main_text_align_right'][0]
+                )
+                dialog.ui.Align_center_main_text.setChecked(
+                    data['main_text_align_center'][0]
+                )
                 dialog.exec()
 
         except IOError:
@@ -98,7 +132,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             scale_factor = 4.5  # Фактор увеличения
             transform = QTransform().scale(scale_factor, scale_factor)
             svg_item.setTransform(transform)
-
+            current_tab = self.tabWidget.widget(tab_index)
+            card_view = current_tab.findChild(QGraphicsView,
+                                              "Card_view")
+            self.Card_view = card_view
             self.Card_view.setScene(scene)
 
     def addPage(self):
@@ -131,23 +168,17 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
         self.Card_view = QGraphicsView(self.layoutWidget)
         self.Card_view.setObjectName(u"Card_view")
-
         self.verticalLayout_3.addWidget(self.Card_view)
-
         self.Change_card_la = QVBoxLayout()
         self.Change_card_la.setObjectName(u"Change_card_la")
         self.verticalSpacer_12 = QSpacerItem(20, 40,
                                              QSizePolicy.Minimum,
                                              QSizePolicy.Expanding)
-
         self.Change_card_la.addItem(self.verticalSpacer_12)
-
         self.verticalSpacer_14 = QSpacerItem(20, 40,
                                              QSizePolicy.Minimum,
                                              QSizePolicy.Expanding)
-
         self.Change_card_la.addItem(self.verticalSpacer_14)
-
         self.Edit_card_but = QPushButton(self.layoutWidget)
         self.Edit_card_but.setObjectName(u"Edit_card_but")
         sizePolicy.setHeightForWidth(
@@ -157,32 +188,22 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         font = QFont()
         font.setPointSize(23)
         self.Edit_card_but.setFont(font)
-
         self.Change_card_la.addWidget(self.Edit_card_but)
-
         self.verticalSpacer_15 = QSpacerItem(20, 40,
                                              QSizePolicy.Minimum,
                                              QSizePolicy.Expanding)
-
         self.Change_card_la.addItem(self.verticalSpacer_15)
-
         self.Show_card_but = QPushButton(self.layoutWidget)
         self.Show_card_but.setObjectName(u"Show_card_but")
         self.Show_card_but.setFont(font)
         self.Show_card_but.clicked.connect(self.show_svg)
-
         self.Change_card_la.addWidget(self.Show_card_but)
-
         self.verticalSpacer_13 = QSpacerItem(20, 40,
                                              QSizePolicy.Minimum,
                                              QSizePolicy.Expanding)
-
         self.Change_card_la.addItem(self.verticalSpacer_13)
-
         self.verticalLayout_3.addLayout(self.Change_card_la)
-
         self.tabWidget.addTab(self.tab, "")
-
         self.Edit_card_but.setText(QCoreApplication.translate(
             "MainWindow",
             u"\u0418\u0437\u043c\u0435\u043d\u0438\u0442\u044c",
@@ -192,7 +213,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             u"\u041f\u043e\u0441\u043c\u043e\u0442\u0440\u0435\u0442\u044c \u043a\u0430\u0440\u0442\u043e\u0447\u043a\u0443",
             None))
         return self.tab
-
 
 class MyDialog(QtWidgets.QDialog, Ui_Dialog):
     def __init__(self):
@@ -220,6 +240,15 @@ class MyDialog(QtWidgets.QDialog, Ui_Dialog):
             italic=self.ui.cursiv.isChecked(),
             font=self.ui.fontComboBox.currentFont().family(),
             font_size=self.ui.font_size_spinbox.text(),
+            name_align_left=self.ui.Align_left_name.isChecked(),
+            name_align_center=self.ui.Align_center_name.isChecked(),
+            name_align_right=self.ui.Align_right_name.isChecked(),
+            date_align_left=self.ui.Align_left_date.isChecked(),
+            date_align_center=self.ui.Align_center_date.isChecked(),
+            date_align_right=self.ui.Align_right_date.isChecked(),
+            main_text_align_left=self.ui.Align_left_main_text.isChecked(),
+            main_text_align_center=self.ui.Align_center_main_text.isChecked(),
+            main_text_align_right=self.ui.Align_right_main_text.isChecked(),
             copies=self.ui.card_copies.text(),
             filename=f'card_{tab_index}.json'
         )

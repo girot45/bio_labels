@@ -16,39 +16,7 @@ def prepare_data():
 
 
 def create_html(new_str):
-    head = """
-    <!DOCTYPE html>
-    <html>
-        <head>
-            <style>
-                body {
-                    margin: 0;
-                    padding: 0;
-                    box-sizing: border-box;
-                }
-                .container {
-                    display: flex;
-                    flex-wrap: wrap;
-                    gap: 0px;
-                    margin: 0;
-                    padding: 0;
-                    box-sizing: border-box;
-                }
-                img {
-                    margin: 0;
-                    padding: 0;
-                    gap: 0px;
-                }
-            </style>
-        </head>
-        <body>
-            <div class="container">
-            """
-    end = """        </div>
-    </body>
-</html>
-"""
-    s = head
+    s = SETTINGS.HTML_HEAD
     cards = prepare_data()
     for card in cards:
         for _ in range(card[1]):
@@ -56,7 +24,7 @@ def create_html(new_str):
             img">\n'''
         if new_str:
             s += '<br>'
-    s += end
+    s += SETTINGS.HTML_HEAD
     with open(SETTINGS.HTML_NAME,
               'w') as f:
         f.write(s)

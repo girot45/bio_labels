@@ -1,4 +1,5 @@
 import os
+import aspose.pdf as ap
 
 import pdfkit
 from pdfkit.api import configuration
@@ -6,7 +7,6 @@ import SETTINGS
 
 
 def html_to_pdf():
-    print(os.getcwd())
     wkhtml_path = configuration(
         wkhtmltopdf=SETTINGS.WKHTMLTOPDF_DIR)
     pdfkit.from_file(
@@ -21,3 +21,13 @@ def html_to_pdf():
                  "margin-left": "2"
         }
     )
+
+    # # создать объект HtmlLoadOptions
+    # options = ap.HtmlLoadOptions()
+    #
+    # # загрузить файл
+    # document = ap.Document(SETTINGS.HTML_NAME, options)
+    #
+    # # конвертировать HTML в PDF
+    # document.save(SETTINGS.PDF_NAME)
+
