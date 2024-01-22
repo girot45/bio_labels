@@ -23,7 +23,9 @@ class Card:
             bold,
             italic,
             font,
-            font_size,
+            font_size_main,
+            font_size_name,
+            font_size_date,
             copies,
             name_align_left,
             name_align_center,
@@ -48,7 +50,9 @@ class Card:
         self.bold = bold
         self.italic = italic
         self.font = font
-        self.font_size = font_size
+        self.font_size_main = font_size_main
+        self.font_size_name = font_size_name
+        self.font_size_date = font_size_date
         self.name_align_left = name_align_left,
         self.name_align_center = name_align_center,
         self.name_align_right = name_align_right,
@@ -78,7 +82,7 @@ class Card:
         # настройка шрифтов
         font_main_text = make_font(
             font=self.font,
-            font_size=self.font_size,
+            font_size=self.font_size_main,
             bold=self.bold,
             italic=self.italic,
             underline=self.underline,
@@ -87,7 +91,7 @@ class Card:
         # Шрифт для имени
         font_name_text = make_font(
             font=self.font,
-            font_size=self.font_size,
+            font_size=self.font_size_name,
             bold=False,
             italic=False,
             underline=False,
@@ -96,14 +100,13 @@ class Card:
         name_font, name_width, name_height, name_font_metrics = \
             make_secondary_font(
                 font=font_name_text,
-                font_size=int(self.font_size) - 1,
                 text=self.date
             )
 
         # Шрифт для даты
         font_date_text = make_font(
             font=self.font,
-            font_size=self.font_size,
+            font_size=self.font_size_date,
             bold=False,
             italic=False,
             underline=False,
@@ -112,7 +115,6 @@ class Card:
         date_font, date_width, date_height, date_font_metrics = \
             make_secondary_font(
                 font=font_date_text,
-                font_size=int(self.font_size) - 1,
                 text=self.date
             )
 
@@ -129,7 +131,7 @@ class Card:
 
         svg_generator.setSize(
             QSize(
-                width_in_pixels + 5 + dx*2,
+                width_in_pixels + 5 + dx * 2,
                 height_in_pixels + 3
             )
         )
@@ -137,7 +139,7 @@ class Card:
             QRectF(
                 0,  # смещение по x
                 0,  # смещение по x
-                width_in_pixels + dx*2,  # ширина
+                width_in_pixels + dx * 2,  # ширина
                 height_in_pixels  # высота
             )
         )
@@ -154,10 +156,10 @@ class Card:
             # создание текста даты
             painter.rotate(-90)
             painter.setFont(date_font)
-            painter.setPen(QColor(0,0,0))
+            painter.setPen(QColor(0, 0, 0))
             if self.date_align_center[0]:
                 dy = -(height_in_pixels - 1 - (height_in_pixels
-                                           - date_width) / 2)
+                                               - date_width) / 2)
             elif self.date_align_right[0]:
                 dy = -(height_in_pixels - (height_in_pixels
                                            - date_width))
@@ -166,7 +168,7 @@ class Card:
             painter.drawText(
                 QRectF(
                     dy,
-                    dx/2,
+                    dx / 2,
                     date_width,
                     date_height
                 ),
@@ -175,7 +177,8 @@ class Card:
             painter.rotate(90)
 
         # создание рамки основного текста
-        rect = QRectF(0, 0, width_in_pixels + dx*2, height_in_pixels)
+        rect = QRectF(0, 0, width_in_pixels + dx * 2,
+                      height_in_pixels)
         rect_pen = QPen(QColor(0, 0, 0))
         rect_pen.setWidth(1)
 
@@ -222,7 +225,7 @@ class Card:
         else:
             painter.drawText(
                 QRectF(
-                    dx*2 + 1,
+                    dx * 2 + 1,
                     1,
                     width_in_pixels,
                     height_in_pixels
@@ -234,7 +237,7 @@ class Card:
         # Добавление имени с более тонким шрифтом
         if self.name_check:
             painter.setFont(name_font)
-            painter.setPen(QColor(0,0,0))
+            painter.setPen(QColor(0, 0, 0))
             name_y = height_in_pixels - name_height - 2
 
             if self.name_align_center[0]:
@@ -263,11 +266,8 @@ class Card:
         painter.end()
 
 
-
-def make_secondary_font(font_size, font, text):
-    font_size_ = int(font_size) - 1
+def make_secondary_font(font, text):
     font_ = QFont(font)
-    font_.setPointSize(font_size_)
     font_.setWeight(QFont.Light)
     font_metrics_ = QFontMetrics(font_)
     width_ = font_metrics_.boundingRect(text).width()

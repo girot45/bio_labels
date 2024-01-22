@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
-    <height>482</height>
+    <width>687</width>
+    <height>464</height>
    </rect>
   </property>
   <property name="sizeIncrement">
@@ -33,9 +33,9 @@
     <property name="geometry">
      <rect>
       <x>220</x>
-      <y>10</y>
-      <width>371</width>
-      <height>471</height>
+      <y>0</y>
+      <width>461</width>
+      <height>461</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -48,48 +48,61 @@
      <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>371</width>
-        <height>451</height>
+        <x>1</x>
+        <y>1</y>
+        <width>451</width>
+        <height>431</height>
        </rect>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_3">
+      <layout class="QVBoxLayout" name="verticalLayout">
        <item>
         <widget class="QGraphicsView" name="Card_view"/>
        </item>
        <item>
         <layout class="QVBoxLayout" name="Change_card_la">
          <item>
-          <spacer name="verticalSpacer_12">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
+          <widget class="QPushButton" name="Load_card_but">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
            </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>40</height>
-            </size>
+           <property name="font">
+            <font>
+             <pointsize>23</pointsize>
+            </font>
            </property>
-          </spacer>
+           <property name="layoutDirection">
+            <enum>Qt::LeftToRight</enum>
+           </property>
+           <property name="text">
+            <string>Загрузить</string>
+           </property>
+          </widget>
          </item>
          <item>
-          <spacer name="verticalSpacer_14">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
+          <widget class="QPushButton" name="Save_card_but">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
            </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>40</height>
-            </size>
+           <property name="font">
+            <font>
+             <pointsize>23</pointsize>
+            </font>
            </property>
-          </spacer>
+           <property name="text">
+            <string>Сохранить </string>
+           </property>
+          </widget>
          </item>
          <item>
           <widget class="QPushButton" name="Edit_card_but">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
@@ -103,19 +116,6 @@
             <string>Изменить</string>
            </property>
           </widget>
-         </item>
-         <item>
-          <spacer name="verticalSpacer_15">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>40</height>
-            </size>
-           </property>
-          </spacer>
          </item>
          <item>
           <widget class="QPushButton" name="Show_card_but">
@@ -129,117 +129,18 @@
            </property>
           </widget>
          </item>
-         <item>
-          <spacer name="verticalSpacer_13">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>40</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
         </layout>
        </item>
       </layout>
      </widget>
     </widget>
     <widget class="QWidget" name="tab_2">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
      <attribute name="title">
       <string>Tab 2</string>
      </attribute>
-     <widget class="QWidget" name="layoutWidget">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>371</width>
-        <height>451</height>
-       </rect>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
-       <item>
-        <widget class="QGraphicsView" name="Card_view_2"/>
-       </item>
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout">
-         <item>
-          <spacer name="verticalSpacer_7">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>40</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <spacer name="verticalSpacer_8">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>40</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QPushButton" name="Edit_card_but_2">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>23</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>Изменить</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="verticalSpacer_11">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>40</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <spacer name="verticalSpacer_10">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>40</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
-       </item>
-      </layout>
-     </widget>
     </widget>
    </widget>
    <widget class="QWidget" name="layoutWidget">
@@ -248,7 +149,7 @@
       <x>0</x>
       <y>0</y>
       <width>221</width>
-      <height>481</height>
+      <height>461</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="Left_side_bar">
@@ -309,7 +210,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="Del_tav_but">
+      <widget class="QPushButton" name="Del_tab_but">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
          <horstretch>0</horstretch>
@@ -402,8 +303,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Просмотр документа
-перед печатью</string>
+        <string>Просмотр документа</string>
        </property>
       </widget>
      </item>
@@ -421,14 +321,14 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="Print_but">
+      <widget class="QPushButton" name="Save_pdf_but">
        <property name="font">
         <font>
          <pointsize>16</pointsize>
         </font>
        </property>
        <property name="text">
-        <string>Печать документа</string>
+        <string>Сохранить документ</string>
        </property>
       </widget>
      </item>
@@ -447,6 +347,101 @@
      </item>
     </layout>
    </widget>
+   <widget class="QFrame" name="frame">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>691</width>
+      <height>628</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QFrame{
+    background-color: rgb(255, 255, 255);
+}
+
+QPushButton:pressed{  
+    background-color: rgb(0,0,0);
+    color: rgb(255,255,255)
+}</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QPushButton" name="pushButton">
+     <property name="geometry">
+      <rect>
+       <x>243</x>
+       <y>340</y>
+       <width>201</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>25</pointsize>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border: 2px solid rgb(0,0,0);
+border-radius: 20px;</string>
+     </property>
+     <property name="text">
+      <string>Начать работу</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>60</y>
+       <width>680</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial Black</family>
+       <pointsize>38</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>LABELS</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_2">
+     <property name="geometry">
+      <rect>
+       <x>240</x>
+       <y>190</y>
+       <width>211</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>17</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Created by: Suvorov Kirill 
+Version: 3.0</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </widget>
+   <zorder>layoutWidget</zorder>
+   <zorder>tabWidget</zorder>
+   <zorder>frame</zorder>
   </widget>
  </widget>
  <resources/>

@@ -1,4 +1,4 @@
-PAGE_DIR = 'cards/pages'
+CARD_DIR = "cards/savedcards"
 SVG_DIR = 'cards/svgs'
 JSON_DIR = 'cards/jsons'
 PDF_NAME = 'cards/card_doc.pdf'
@@ -53,7 +53,9 @@ JSON_TEMPLATE = {
     'bold': False,
     'italic': False,
     'font': 'Times New Roman',
-    'font_size': '5',
+    'font_size_main': '5',
+    'font_size_name': '4',
+    'font_size_date': '4',
     'main_text_align_left': [True],
     'main_text_align_center': [False],
     'main_text_align_right': [False],
